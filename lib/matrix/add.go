@@ -7,9 +7,9 @@ func (m1 *Matrix) add(m2 *Matrix) *Matrix {
 
 	data1 := m1.Data
 	data2 := m2.Data
-	result := make([][]float32, len(data1))
+	result := make([][]float64, len(data1))
 	for i, row := range data1 {
-		result[i] = make([]float32, len(row))
+		result[i] = make([]float64, len(row))
 		for j := range row {
 			result[i][j] = data1[i][j] + data2[i][j]
 		}
@@ -19,9 +19,9 @@ func (m1 *Matrix) add(m2 *Matrix) *Matrix {
 }
 
 func (m1 *Matrix) add_with_lead_dim(m2 *Matrix) *Matrix {
-	result := make([][]float32, m1.Rows)
+	result := make([][]float64, m1.Rows)
 	for i, row := range m1.Data {
-		result[i] = make([]float32, m1.Cols)
+		result[i] = make([]float64, m1.Cols)
 		for j := range row {
 			result[i][j] = row[j] + m2.Data[0][j]
 		}
@@ -29,10 +29,10 @@ func (m1 *Matrix) add_with_lead_dim(m2 *Matrix) *Matrix {
 	return InitMatrix(result)
 }
 
-func (m *Matrix) singleAdd(a float32) *Matrix {
-	result := make([][]float32, m.Rows)
+func (m *Matrix) singleAdd(a float64) *Matrix {
+	result := make([][]float64, m.Rows)
 	for i := 0; i < m.Rows; i++ {
-		result[i] = make([]float32, m.Cols)
+		result[i] = make([]float64, m.Cols)
 		for j := 0; j < m.Cols; j++ {
 			result[i][j] = m.Data[i][j] + a
 		}

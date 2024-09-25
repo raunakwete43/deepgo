@@ -8,7 +8,7 @@ type Array_Function func(m *matrix.Matrix) *matrix.Matrix
 type Chain []Array_Function
 
 func Derv(f Array_Function, m *matrix.Matrix) *matrix.Matrix {
-	h := float32(1e-4)
+	h := float64(1e-4)
 	x := f(m.Add(h))      // f(a+h)
 	y := f(m.Subtract(h)) // f(a-h)
 	return x.Subtract(y).SingleDiv(2 * h)
@@ -89,7 +89,7 @@ func matrix_Function_Backward_1(x, w *matrix.Matrix, sigma Array_Function) *matr
 	return nil
 }
 
-func Matrix_Function_Forward_Sum(x, w *matrix.Matrix, sigma Array_Function) float32 {
+func Matrix_Function_Forward_Sum(x, w *matrix.Matrix, sigma Array_Function) float64 {
 	if x.Cols == w.Rows {
 		n := x.Dot(w)
 
