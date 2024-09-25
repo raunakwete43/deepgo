@@ -2,50 +2,23 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+
 	"github.com/raunakwete43/deepgo.git/lib/linear_reg"
-	"github.com/raunakwete43/deepgo.git/lib/matrix"
+	// "github.com/raunakwete43/deepgo.git/lib/matrix"
 )
 
 func main() {
-	X := matrix.InitMatrix([][]float64{
-		{1, 2, 3},
-		{4, 5, 6},
-	})
+	g := rand.New(rand.NewSource(1234))
+	data := linearreg.Load_CSV("./data.csv")
+	model := linearreg.Init_Linear(data, g)
 
-	y := matrix.InitMatrix([][]float64{
-		{6},
-		{15},
-	})
+	fmt.Println(data.X.Shape())
+	fmt.Println(model.W.Shape())
 
-	// Example weights
-	weights := linearreg.WF{
-		"W": matrix.InitMatrix([][]float64{
-			{0.5},
-			{0.5},
-			{0.5},
-		}),
-		"B": matrix.InitMatrix([]float64{
-			0.1,
-		}),
-	}
+	model = model.Fit(data, 1000, 1e-4)
 
-	for range 100 {
-		// Perform forward linear regression
-		_, forward_info := linearreg.Forward_Linear_Regression(X, y, weights)
+	fmt.Println(*model.W, model.B.Value())
+	fmt.Println(model.RMSE(data.X, data.Y))
 
-		// Print results
-
-		loss_gradients := linearreg.Loss_Gradients(forward_info, weights)
-
-		for key := range weights {
-			weights[key] = weights[key].Subtract(loss_gradients[key].SingleMul(0.002))
-		}
-	}
-
-	fmt.Println("Weights -> ", weights["W"].Value())
-	fmt.Println("Bias -> ", weights["B"].Value())
-	fmt.Println("Predictions -> ",
-		X.Dot(weights["W"]).Add(weights["B"]).Value())
-
-	fmt.Println("Predicted Values => ", linearreg.Predict(X, weights).Value())
 }
