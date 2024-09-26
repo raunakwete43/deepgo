@@ -5,12 +5,19 @@ import "github.com/raunakwete43/deepgo.git/lib/matrix"
 type Operation interface {
 	Forward(*matrix.Matrix) *matrix.Matrix
 	Backward(*matrix.Matrix) *matrix.Matrix
+	_output() *matrix.Matrix
+	_input_grad(*matrix.Matrix) *matrix.Matrix
+	_param_grad(*matrix.Matrix) *matrix.Matrix
 }
 
 type BaseOperation struct {
 	input_     *matrix.Matrix
 	output     *matrix.Matrix
 	input_grad *matrix.Matrix
+}
+
+func NewBaseOperation() *BaseOperation {
+	return &BaseOperation{}
 }
 
 func (self *BaseOperation) Forward(input_ *matrix.Matrix) *matrix.Matrix {

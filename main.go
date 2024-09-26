@@ -5,7 +5,6 @@ import (
 	"math/rand"
 
 	"github.com/raunakwete43/deepgo.git/lib/linear_reg"
-	// "github.com/raunakwete43/deepgo.git/lib/matrix"
 )
 
 func main() {

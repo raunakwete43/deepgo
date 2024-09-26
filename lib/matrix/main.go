@@ -262,3 +262,42 @@ func (m *Matrix) Apply(f func(float64) float64) *Matrix {
 	}
 	return InitMatrix(result)
 }
+
+func (m *Matrix) Reshape(rows, cols int) *Matrix {
+	totalElements := m.Rows * m.Cols
+
+	newTotalElements := rows * cols
+
+	// Check if the number of elements match
+	if totalElements != newTotalElements {
+		panic("cannot reshape matrix: number of elements do not match")
+	}
+
+	// Create a new matrix with the desired shape
+	newData := make([][]float64, rows)
+	for i := range newData {
+		newData[i] = make([]float64, cols)
+	}
+
+	// Flatten the original matrix data into a 1D slice
+	flatData := make([]float64, 0, totalElements)
+	for _, row := range m.Data {
+		flatData = append(flatData, row...)
+	}
+
+	// Fill the new matrix with the flattened data
+	index := 0
+	for i := 0; i < rows; i++ {
+		for j := 0; j < cols; j++ {
+			newData[i][j] = flatData[index]
+			index++
+		}
+	}
+
+	// Update the matrix with the new shape and data
+	return &Matrix{
+		Data: newData,
+		Rows: rows,
+		Cols: cols,
+	}
+}

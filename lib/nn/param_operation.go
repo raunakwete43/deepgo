@@ -8,9 +8,19 @@ type ParamOperation struct {
 	param_grad *matrix.Matrix
 }
 
-func (self *ParamOperation) __init__(param *matrix.Matrix) *ParamOperation {
-	self.param = param
-	return self
+func NewParamOperation(param *matrix.Matrix) *ParamOperation {
+	return &ParamOperation{
+		BaseOperation: *NewBaseOperation(),
+		param:         param,
+	}
+}
+
+func (self *ParamOperation) Forward(input_ *matrix.Matrix) *matrix.Matrix {
+	self.input_ = input_
+
+	self.output = self._output()
+
+	return self.output
 }
 
 func (self *ParamOperation) Backward(output_grad *matrix.Matrix) *matrix.Matrix {
