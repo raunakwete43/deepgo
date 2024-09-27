@@ -39,9 +39,13 @@ func (self *BaseOperation) Backward(output_grad *matrix.Matrix) *matrix.Matrix {
 }
 
 func (self *BaseOperation) _output() *matrix.Matrix {
-	panic("Not implemented")
+	panic("Not implemented!")
 }
 
 func (self *BaseOperation) _input_grad(output_grad *matrix.Matrix) *matrix.Matrix {
-	panic("Not implemented")
+	panic("Not implemented!")
+}
+
+func (self *BaseOperation) _param_grad(*matrix.Matrix) *matrix.Matrix {
+	panic("Not implemented!")
 }

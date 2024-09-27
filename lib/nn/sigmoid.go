@@ -40,19 +40,12 @@ func (self *Sigmoid) Forward(input_ *matrix.Matrix) *matrix.Matrix {
 	return self.output
 }
 
-// func (self *Sigmoid) Backward(output_grad *matrix.Matrix) *matrix.Matrix {
-// 	assert_same_shape(self.output, output_grad)
-//
-// 	self.input_grad = self._input_grad(output_grad)
-//
-// 	assert_same_shape(self.input_, self.input_grad)
-//
-// 	return self.input_grad
-// }
-//
+func (self *Sigmoid) Backward(output_grad *matrix.Matrix) *matrix.Matrix {
+	assert_same_shape(self.output, output_grad)
 
-func test() {
-	sm := &Sigmoid{}
-	sm.__init__()
-	sm.Bac
+	self.input_grad = self._input_grad(output_grad)
+
+	assert_same_shape(self.input_, self.input_grad)
+
+	return self.input_grad
 }
